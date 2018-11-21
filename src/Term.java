@@ -27,10 +27,16 @@ public class Term implements Comparable<Term> {
 	 *             if weight is negative
 	 */
 	public Term(String word, double weight) {
-		// TODO: Complete Term constructor
 		
 		myWord = word;
 		myWeight = weight;
+		if (weight<0) {
+			throw new IllegalArgumentException("negative weight "+ weight);
+		}
+		if (word == null) {
+			throw new NullPointerException("null word "+ word);
+		}
+		
 	}
 	
 	/**
@@ -86,7 +92,30 @@ public class Term implements Comparable<Term> {
 		 */
 		public int compare(Term v, Term w) {
 			// TODO: Implement compare
+			String vword = "";
+			String wword = "";
 			
+			if(v.getWord().length()<myPrefixSize) {
+				vword = v.getWord();
+			}
+			else vword = v.getWord().substring(0, myPrefixSize);
+			 
+			if(w.getWord().length()<myPrefixSize) {
+				wword = w.getWord();
+			}
+			else wword = w.getWord().substring(0, myPrefixSize);
+			
+			
+			for(int k=0; k<vword.length() && k<wword.length(); k++) {
+				char vchar = vword.charAt(k);
+				char  wchar = wword.charAt(k);
+				if (vchar == wchar) continue;
+				if(vchar<wchar) return vchar - wchar;
+				if(wchar<vchar) return vchar - wchar;
+			}
+			if(vword.length()!=wword.length()) {
+				return vword.length()-wword.length();
+			}
 			return 0;
 		}
 	
@@ -100,9 +129,12 @@ public class Term implements Comparable<Term> {
 	 */
 	public static class ReverseWeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
-			// TODO: implement compare
-			
+			Double vweight = v.getWeight();
+			Double wweight = w.getWeight();
+			int reversecomp = wweight.compareTo(vweight);
+			if(reversecomp!= 0) return reversecomp;
 			return 0;
+			
 		}
 	}
 
@@ -114,8 +146,10 @@ public class Term implements Comparable<Term> {
 	 */
 	public static class WeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
-			// TODO: implement compare
-			
+			Double vweight = v.getWeight();
+			Double wweight = w.getWeight();
+			int normalcomp = vweight.compareTo(wweight);
+			if(normalcomp!= 0) return normalcomp;
 			return 0;
 		}
 	}

@@ -118,7 +118,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		int lastindex = lastIndexOf(myTerms, targetkey, comp);
 		
 		if(firstindex == -1 || lastindex == -1) return list; 
-		for(int k1 = firstindex; k1< lastindex; k1++) {
+		for(int k1 = firstindex; k1<= lastindex; k1++) {
 			list.add(myTerms[k1]);
 		}
 		

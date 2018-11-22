@@ -113,7 +113,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		}
 		
 		Term targetkey = new Term(prefix, 0);
-		Comparator<Term> comp = new Term.PrefixOrder(k);
+		Comparator<Term> comp = new Term.PrefixOrder(prefix.length());
 		int firstindex = firstIndexOf(myTerms, targetkey, comp);
 		int lastindex = lastIndexOf(myTerms, targetkey, comp);
 		

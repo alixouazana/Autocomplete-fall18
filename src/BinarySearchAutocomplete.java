@@ -1,5 +1,7 @@
 import java.util.*;
 
+
+
 /**
  * 
  * Using a sorted array of Term objects, this implementation uses binary search
@@ -99,14 +101,30 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	 * @return An array of the k words with the largest weights among all words
 	 *         starting with prefix, in descending weight order. If less than k
 	 *         such words exist, return an array containing all those words If
-	 *         no such words exist, reutrn an empty array
+	 *         no such words exist, return an empty array
 	 * @throws a
 	 *             NullPointerException if prefix is null
 	 */
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
-
 		ArrayList<Term> list = new ArrayList<>();
+		if (prefix == null) {
+			throw new NullPointerException("null prefix "+ prefix);
+		}
+		
+		Term targetkey = new Term(prefix, 0);
+		Comparator<Term> comp = new Term.PrefixOrder(k);
+		int firstindex = firstIndexOf(myTerms, targetkey, comp);
+		int lastindex = lastIndexOf(myTerms, targetkey, comp);
+		
+		if(firstindex == -1 || lastindex == -1) return list; 
+		for(int k1 = firstindex; k1< lastindex+1; k1++) {
+			list.add(myTerms[k1]);
+		}
+		
+		Collections.sort(list, new Term.ReverseWeightOrder());
+		if(list.size()> k) return list.subList(0, k);
+		
 		return list;
 	}
 }

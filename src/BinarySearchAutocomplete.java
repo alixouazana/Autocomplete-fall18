@@ -116,8 +116,6 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		Comparator<Term> comp = new Term.PrefixOrder(prefix.length());
 		int firstindex = firstIndexOf(myTerms, targetkey, comp);
 		int lastindex = lastIndexOf(myTerms, targetkey, comp);
-		
-		if(firstindex == -1 || lastindex == -1) return list; 
 		for(int k1 = firstindex; k1<= lastindex; k1++) {
 			list.add(myTerms[k1]);
 		}
